@@ -1,3 +1,6 @@
+## 4.1.0
+- Added 'setPreventDefaultUrlClick' API
+ 
 ## 4.0.0
 - Require iOS 15 and above
 - Upgrade iOS's ChannelIOSdk version to 12.6.0
