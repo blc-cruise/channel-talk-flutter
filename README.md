@@ -117,7 +117,7 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
   # Add below line
-  pod 'ChannelIOSDK', podspec: 'https://mobile-static.channel.io/ios/12.6.0/xcframework.podspec'
+  pod 'ChannelIOSDK', podspec: 'https://mobile-static.channel.io/ios/13.1.0/xcframework.podspec'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
@@ -142,6 +142,9 @@ import ChannelIOFront
 
 
 ### Android
+
+#### Requirements
+- minSdkVersion 21 (Channel Talk Android SDK requires API 21+ for features to work)
 
 #### Push notifications in combination with FCM
 This plugin works in combination with the [`firebase_messaging`](https://pub.dev/packages/firebase_messaging) plugin to receive Push Notifications. To set this up:

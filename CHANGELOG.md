@@ -1,3 +1,8 @@
+## 4.2.0
+- Upgrade iOS's ChannelIOSdk version to 13.0.2
+- Upgrade Android's ChannelIOSdk version to 13.1.0
+- Update Android `minSdkVersion` requirement to 21
+
 ## 4.1.0
 - Added 'setPreventDefaultUrlClick' API
  
