@@ -1,3 +1,9 @@
+## 4.2.0+fallcent.1
+- Fix `updateUser`가 인자를 생략해도 native에서 항상 builder set 호출이 일어나
+  서버에 저장된 기존 `tags` / `language` / `unsubscribeEmail` / `unsubscribeTexting`
+  값이 덮어써지던 문제 (iOS / Android)
+- Android: `updateUser` 진입 시 `isBooted` 가드의 누락된 `return` 추가
+
 ## 4.2.0
 - Upgrade iOS's ChannelIOSdk version to 13.0.2
 - Upgrade Android's ChannelIOSdk version to 13.1.0
