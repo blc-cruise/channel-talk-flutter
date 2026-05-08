@@ -300,6 +300,7 @@ public class ChannelTalkFlutterPlugin implements FlutterPlugin, MethodCallHandle
   public void updateUser(@NonNull MethodCall call, @NonNull final Result result) {
     if (!ChannelIO.isBooted()) {
       result.error("UNAVAILABLE", "Channel Talk is not booted", null);
+      return;
     }
 
     Map<String, Object> profileMap = new HashMap<>();
@@ -322,26 +323,25 @@ public class ChannelTalkFlutterPlugin implements FlutterPlugin, MethodCallHandle
       }
     }
 
-    Language enumLanguage = Language.KOREAN;
+    UserData.Builder builder = new UserData.Builder().setProfileMap(profileMap);
+
     if (call.argument("language") != null) {
-      enumLanguage = getLanguage(call.argument("language"));
+      builder.setLanguage(getLanguage(call.argument("language")));
     }
-
-    List<String> tags = new ArrayList<String>();
     if (call.argument("tags") != null) {
-      tags = call.argument("tags");
+      List<String> tags = call.argument("tags");
+      builder.setTags(tags);
+    }
+    if (call.argument("unsubscribeEmail") != null) {
+      Boolean unsubscribeEmail = call.argument("unsubscribeEmail");
+      builder.setUnsubscribeEmail(unsubscribeEmail);
+    }
+    if (call.argument("unsubscribeTexting") != null) {
+      Boolean unsubscribeTexting = call.argument("unsubscribeTexting");
+      builder.setUnsubscribeTexting(unsubscribeTexting);
     }
 
-    UserData userData = new UserData.Builder()
-        .setLanguage(enumLanguage)
-        .setProfileMap(profileMap)
-        .setTags(tags)
-        .setUnsubscribeEmail(call.argument(
-            "unsubscribeEmail"))
-        .setUnsubscribeTexting(call.argument(
-            "unsubscribeTexting"))
-
-        .build();
+    UserData userData = builder.build();
 
     ChannelIO.updateUser(userData, (e, user) -> {
       if (e == null && user != null) {

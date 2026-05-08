@@ -238,30 +238,29 @@ public class ChannelTalkFlutterPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    let language = argMaps["language"] as? String
-    var enumLanguage: LanguageOption = LanguageOption.korean
-    switch language {
-      case "en":
-        enumLanguage = LanguageOption.english
-      case "ko":
-        enumLanguage = LanguageOption.korean
-      case "ja":
-        enumLanguage = LanguageOption.japanese
-      default:
-        enumLanguage = LanguageOption.device
-        
-    }
-    let tags = argMaps["tags"] as? [String]
-    let unsubscribeEmail = argMaps["unsubscribeEmail"] as? Bool ?? false
-    let unsubscribeTexting = argMaps["unsubscribeTexting"] as? Bool ?? false
+    let builder = UpdateUserParamBuilder().with(profile: profile)
 
-    let userData = UpdateUserParamBuilder()
-      .with(language: enumLanguage)
-      .with(tags: tags)
-      .with(profile: profile)
-      .with(unsubscribeEmail: unsubscribeEmail)
-      .with(unsubscribeTexting: unsubscribeTexting)
-      .build()
+    if let languageStr = argMaps["language"] as? String {
+      let enumLanguage: LanguageOption
+      switch languageStr {
+        case "en": enumLanguage = .english
+        case "ko": enumLanguage = .korean
+        case "ja": enumLanguage = .japanese
+        default:   enumLanguage = .device
+      }
+      builder.with(language: enumLanguage)
+    }
+    if let tags = argMaps["tags"] as? [String] {
+      builder.with(tags: tags)
+    }
+    if let unsubscribeEmail = argMaps["unsubscribeEmail"] as? Bool {
+      builder.with(unsubscribeEmail: unsubscribeEmail)
+    }
+    if let unsubscribeTexting = argMaps["unsubscribeTexting"] as? Bool {
+      builder.with(unsubscribeTexting: unsubscribeTexting)
+    }
+
+    let userData = builder.build()
 
     ChannelIO.updateUser(param: userData) { (error, user) in
       if let _ = user, user != nil {
